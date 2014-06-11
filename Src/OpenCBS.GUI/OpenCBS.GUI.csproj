@@ -19,7 +19,7 @@
     <DelaySign>false</DelaySign>
     <OutputType>WinExe</OutputType>
     <RootNamespace>OpenCBS.GUI</RootNamespace>
-    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
     <StartupObject>OpenCBS.GUI.AppMain</StartupObject>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
