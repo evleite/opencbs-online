@@ -1,1 +1,0 @@
-OpenCBS.GUI.exe -dumpObjects
