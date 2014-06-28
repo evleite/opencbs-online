@@ -1,0 +1,3 @@
+[submodule "opencbs"]
+	path = opencbs
+	url = https://github.com/himmelreich-it/opencbs
