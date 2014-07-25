@@ -11,8 +11,8 @@
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>OpenCBS.Online.Core</RootNamespace>
-    <AssemblyName>OpenCBS.Online.Core</AssemblyName>
+    <RootNamespace>OpenCBS.Online.Service</RootNamespace>
+    <AssemblyName>OpenCBS.Online.Service</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
@@ -41,16 +41,41 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Nancy, Version=0.21.1.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Dapper, Version=1.27.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Nancy.0.21.1\lib\net40\Nancy.dll</HintPath>
+      <HintPath>..\packages\Dapper.1.27\lib\net45\Dapper.dll</HintPath>
     </Reference>
-    <Reference Include="Nancy.Hosting.Aspnet, Version=0.21.1.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Nancy, Version=0.23.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Nancy.Hosting.Aspnet.0.21.1\lib\net40\Nancy.Hosting.Aspnet.dll</HintPath>
+      <HintPath>..\packages\Nancy.0.23.1\lib\net40\Nancy.dll</HintPath>
+    </Reference>
+    <Reference Include="Nancy.Bootstrappers.StructureMap, Version=0.23.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Nancy.BootStrappers.StructureMap.0.23.1\lib\net40\Nancy.Bootstrappers.StructureMap.dll</HintPath>
+    </Reference>
+    <Reference Include="Nancy.Hosting.Aspnet, Version=0.23.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Nancy.Hosting.Aspnet.0.23.1\lib\net40\Nancy.Hosting.Aspnet.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog">
+      <HintPath>..\packages\NLog.3.1.0.0\lib\net45\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap, Version=3.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\structuremap.3.0.4.125\lib\net40\StructureMap.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap.Net4, Version=3.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\structuremap.3.0.4.125\lib\net40\StructureMap.Net4.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -65,15 +90,63 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationRegistry.cs" />
+    <Compile Include="BaseModule.cs" />
+    <Compile Include="Data\ConnectionManager.cs" />
+    <Compile Include="Data\IConnectionManager.cs" />
+    <Compile Include="DateHelper.cs" />
+    <Compile Include="Extensions\ContainerExtensions.cs" />
+    <Compile Include="IDateHelper.cs" />
+    <Compile Include="IOpenGuid.cs" />
+    <Compile Include="Json\JsonIocConvert.cs" />
+    <Compile Include="Json\JsonIocSerializer.cs" />
+    <Compile Include="Models\BadRequest.cs" />
+    <Compile Include="Models\IBadRequest.cs" />
+    <Compile Include="Models\Security\AccessToken.cs" />
+    <Compile Include="Models\Security\AuthenticationRequest.cs" />
+    <Compile Include="Models\Security\AuthenticationResult.cs" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="IndexModule.cs" />
+    <Compile Include="Models\Security\IAccessToken.cs" />
+    <Compile Include="Models\Security\IAuthenticationRequest.cs" />
+    <Compile Include="Models\Security\IAuthenticationResult.cs" />
+    <Compile Include="Models\Settings.cs" />
+    <Compile Include="OpenGuid.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Modules\Security\SecurityModule.cs" />
+    <Compile Include="Resources\Content.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Content.resx</DependentUpon>
+    </Compile>
+    <Compile Include="RouterPattern.cs" />
+    <Compile Include="Security\AccessTokenCreator.cs" />
+    <Compile Include="Security\AuthenticationService.cs" />
+    <Compile Include="Security\Encryption\BlockEncryptor\AES.cs" />
+    <Compile Include="Security\Encryption\BlockEncryptor\BlockEncrypter.cs" />
+    <Compile Include="Security\Encryption\BlockEncryptor\ByteHelpers.cs" />
+    <Compile Include="Security\Encryption\BlockEncryptor\GlobalSuppressions.cs" />
+    <Compile Include="Security\Encryption\BlockEncryptor\GZipCompression.cs" />
+    <Compile Include="Security\Encryption\Encrypter.cs" />
+    <Compile Include="Security\Encryption\IEncrypter.cs" />
+    <Compile Include="Security\Encryption\IPasswordHash.cs" />
+    <Compile Include="Security\Encryption\PasswordHash.cs" />
+    <Compile Include="Security\IAccessTokenCreator.cs" />
+    <Compile Include="Security\IAuthenticationService.cs" />
+    <Compile Include="Data\Security\ITokenStorage.cs" />
+    <Compile Include="Data\Security\TokenStorage.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\index.sshtml">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="packages.config" />
+    <None Include="NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="NLog.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -83,6 +156,22 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Content.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Content.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\opencbs\Src\OpenCBS.ArchitectureV2\OpenCBS.ArchitectureV2.csproj">
+      <Project>{14ba2ca7-ced7-4f57-8855-b20f7bf3fb96}</Project>
+      <Name>OpenCBS.ArchitectureV2</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\opencbs\Src\OpenCBS.CoreDomain\OpenCBS.CoreDomain.csproj">
+      <Project>{d539c388-3848-4a3e-ab87-42b8e329755a}</Project>
+      <Name>OpenCBS.CoreDomain</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
