@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace OpenCBS.Online.Service.Data
 {
-    public interface IConnectionManager
+    public interface IDataConnection
     {
-        SqlConnection Get();
+        int Execute(string sql, dynamic param = null);
+
+        IEnumerable<T> Query<T>(string sql, object p);
     }
 }

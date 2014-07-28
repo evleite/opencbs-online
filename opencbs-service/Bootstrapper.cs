@@ -15,8 +15,7 @@
             // No registrations should be performed in here, however you may
             // resolve things that are needed during application startup.
             //base.ApplicationStartup(container, pipelines);
-            CookieBasedSessions.Enable(pipelines);
-            
+        
         }
 
         protected override void ConfigureApplicationContainer(IContainer existingContainer)

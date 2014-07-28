@@ -92,8 +92,8 @@
   <ItemGroup>
     <Compile Include="ApplicationRegistry.cs" />
     <Compile Include="BaseModule.cs" />
-    <Compile Include="Data\ConnectionManager.cs" />
-    <Compile Include="Data\IConnectionManager.cs" />
+    <Compile Include="Data\DataConnection.cs" />
+    <Compile Include="Data\IDataConnection.cs" />
     <Compile Include="DateHelper.cs" />
     <Compile Include="Extensions\ContainerExtensions.cs" />
     <Compile Include="IDateHelper.cs" />
@@ -137,9 +137,6 @@
     <Compile Include="Data\Security\TokenStorage.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\index.sshtml">
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="packages.config" />
     <None Include="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -156,6 +153,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\" />
+    <Folder Include="Views\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Content.resx">

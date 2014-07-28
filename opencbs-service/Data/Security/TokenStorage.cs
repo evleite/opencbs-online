@@ -15,58 +15,52 @@ namespace OpenCBS.Online.Service.Data.Security
     {
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
-        private IConnectionManager connectionManager;
+        private IDataConnection dataConnection;
         private IDateHelper dateHelper;
-        public TokenStorage(IConnectionManager connectionManager, IDateHelper dateHelper)
+        public TokenStorage(IDataConnection dataConnection, IDateHelper dateHelper)
         {
-            this.connectionManager = connectionManager;
+            this.dataConnection = dataConnection;
             this.dateHelper = dateHelper;
         }
 
         public bool StoreToken(PasswordHash.HashInfo hashedToken, string encryptedUserId, byte[] userIdSalt, DateTime issuedAt)
         {
-            using (var connection = connectionManager.Get()){
+            logger.Debug("Store access token");
+            var sql = @" INSERT INTO [TokenStorage]
+                                ([id]
+                                ,[id_salt]
+                                ,[token_hash]
+                                ,[token_salt]
+                                ,[token_method]
+                                ,[token_iterations]
+                                ,[issued_at]
+                                ,[refreshed])
+                            VALUES
+                                (@id
+                                ,@id_salt
+                                ,@token_hash
+                                ,@token_salt
+                                ,@token_method
+                                ,@token_iterations
+                                ,@issued_at
+                                ,@refreshed)";
 
-               
-                var sql = @" INSERT INTO [TokenStorage]
-                                   ([id]
-                                   ,[id_salt]
-                                   ,[token_hash]
-                                   ,[token_salt]
-                                   ,[token_method]
-                                   ,[token_iterations]
-                                   ,[issued_at]
-                                   ,[refreshed])
-                             VALUES
-                                   (@id
-                                   ,@id_salt
-                                   ,@token_hash
-                                   ,@token_salt
-                                   ,@token_method
-                                   ,@token_iterations
-                                   ,@issued_at
-                                   ,@refreshed)";
-
-                connection.Open();
-                var result = connection.Execute(sql, new {
-                                                            id = encryptedUserId,
-                                                            id_salt = Convert.ToBase64String(userIdSalt),
-                                                            token_hash = hashedToken.Hash,
-                                                            token_salt = hashedToken.Salt,
-                                                            token_iterations = hashedToken.Iterations,
-                                                            token_method = hashedToken.Method,
-                                                            issued_at = issuedAt,
-                                                            refreshed = issuedAt
-                                                        });
-                connection.Close();
-
-                if (result == 1)
-                {
-                    return true;
-                }                    
-            }
-
-            return false;
+            var result = dataConnection.Execute(sql, new
+            {
+                id = encryptedUserId,
+                id_salt = Convert.ToBase64String(userIdSalt),
+                token_hash = hashedToken.Hash,
+                token_salt = hashedToken.Salt,
+                token_iterations = hashedToken.Iterations,
+                token_method = hashedToken.Method,
+                issued_at = issuedAt,
+                refreshed = issuedAt
+            });
+            
+            logger.Debug("Store access token result: " + result);
+            
+            return result == 1 ? true : false;
+            
         }
 
         public bool RetrieveToken(string id, out PasswordHash.HashInfo hashedToken, out string encryptedUserId, out byte[] userIdSalt, out DateTime issuedAt, out DateTime refreshed)
@@ -74,9 +68,7 @@ namespace OpenCBS.Online.Service.Data.Security
 
             try
             {
-                using (var connection = connectionManager.Get())
-                {
-                    var sql = @"SELECT [id]
+                var sql = @"SELECT [id]
                               ,[id_salt]
                               ,[token_hash]
                               ,[token_salt]
@@ -87,33 +79,31 @@ namespace OpenCBS.Online.Service.Data.Security
                           FROM [TokenStorage]
                           WHERE [id] = @id";
 
-                    // open the connection and retrieve the results
-                    connection.Open();
-                    var results = connection.Query<TokenStorageDb>(sql, new { id = id });
-                    connection.Close();
 
-                    // get the first out of the result set and throw exception if there is more
-                    var token = results.Single();
+                var results = dataConnection.Query<TokenStorageDb>(sql, new { id = id });
 
-                    issuedAt = token.issued_at;
-                    refreshed = token.refreshed;
-                    hashedToken = new PasswordHash.HashInfo
-                    {
-                        Hash = token.token_hash,
-                        Iterations = token.token_iterations,
-                        Method = token.token_method,
-                        Salt = token.token_salt
-                    };
-                    encryptedUserId = token.id;
-                    userIdSalt = Convert.FromBase64String(token.id_salt);
+                // get the first out of the result set and throw exception if there is more
+                var token = results.Single();
 
-                    return true;
-                }
+                issuedAt = token.issued_at;
+                refreshed = token.refreshed;
+                hashedToken = new PasswordHash.HashInfo
+                {
+                    Hash = token.token_hash,
+                    Iterations = token.token_iterations,
+                    Method = token.token_method,
+                    Salt = token.token_salt
+                };
+                encryptedUserId = token.id;
+                userIdSalt = Convert.FromBase64String(token.id_salt);
+
+                return true;
+
             }
             catch (Exception ex)
             {
                 logger.Error(ex);
-            }            
+            }         
             
             // set all information on null or default
             hashedToken = null;

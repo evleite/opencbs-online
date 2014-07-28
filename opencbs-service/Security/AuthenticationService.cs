@@ -38,6 +38,7 @@ namespace OpenCBS.Online.Service.Security
             var result = container.GetInstance<IAuthenticationResult>();
             result.AccessToken = accessToken.Token;
             result.IsValid = true;
+            result.IssuedAt = accessToken.IssuedAt;
             result.Message = Resources.Content.AuthenticationResult_Success;
                 
             // return result with access token
@@ -50,6 +51,7 @@ namespace OpenCBS.Online.Service.Security
             result.AccessToken = null;
             result.IsValid = true;
             result.Message = Resources.Content.AuthenticationResult_Failed;
+            result.IssuedAt = null;
             return result;
         }
 

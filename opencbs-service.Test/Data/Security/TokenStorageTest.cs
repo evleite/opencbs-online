@@ -28,10 +28,10 @@ namespace OpenCBS.Online.Service.Test.Data.Security
         [Test]
         public void StoreAndRetrieveTokenTest()
         {
-            var connectionManager = new ConnectionManager();
+            var dataConnection = new DataConnection();
             var dateHelper = new DateHelper();
 
-            var tokenStorage = new TokenStorage(connectionManager, dateHelper);
+            var tokenStorage = new TokenStorage(dataConnection, dateHelper);
 
             var userIdSalt = new byte[24];
             var tokenSalt = new byte[24];
@@ -72,7 +72,78 @@ namespace OpenCBS.Online.Service.Test.Data.Security
         [Test]
         public void StoreExceptionTest()
         {
-            Assert.Inconclusive();
+            var dataConnection = MockRepository.GenerateStub<IDataConnection>();
+            var dateHelper = new DateHelper();
+
+            var tokenStorage = new TokenStorage(dataConnection, dateHelper);
+
+            var userIdSalt = new byte[24];
+            var tokenSalt = new byte[24];
+            var encryptedGuid = "encrypted-guid";
+            var encryptedUserId = "dummy-encrypted-user-id";
+            var issuedAt = new DateTime(2014, 11, 21, 14, 54, 33);
+            var stubSql = @" INSERT INTO [TokenStorage]
+                                ([id]
+                                ,[id_salt]
+                                ,[token_hash]
+                                ,[token_salt]
+                                ,[token_method]
+                                ,[token_iterations]
+                                ,[issued_at]
+                                ,[refreshed])
+                            VALUES
+                                (@id
+                                ,@id_salt
+                                ,@token_hash
+                                ,@token_salt
+                                ,@token_method
+                                ,@token_iterations
+                                ,@issued_at
+                                ,@refreshed)";
+
+            var hashedToken = new PasswordHash.HashInfo
+            {
+                Hash = encryptedGuid,
+                Iterations = 1000,
+                Method = "sha1",
+                Salt = Convert.ToBase64String(tokenSalt)
+            };
+
+            // stub fake calls
+            dataConnection.Stub(x => x.Execute(null, null)).Throw(new Exception()).IgnoreArguments();
+
+            Assert.Throws<Exception>(() => tokenStorage.StoreToken(hashedToken, encryptedUserId, userIdSalt, issuedAt));
+            
+            //Assert.Throws<Exception>(() => tokenStorage.RetrieveToken(encryptedUserId, out hashedTokenResult, out encryptedUserIdResult, out userIdSaltResult, out issuedAtResult, out refreshedResult));
+            
+            
+                        
+        }
+
+        [Test]
+        public void RetrieveTokenExceptionTest()
+        {
+            // declare mocks
+            var dataConnection = MockRepository.GenerateStub<IDataConnection>();
+            
+            // declare objects
+            var dateHelper = new DateHelper();
+            var encryptedUserId = "dummy-encrypted-user-id";
+            var tokenStorage = new TokenStorage(dataConnection, dateHelper);
+            
+            
+            // stub fake calls
+            dataConnection.Stub(x => x.Query<TokenStorage.TokenStorageDb>(null, null)).Throw(new Exception()).IgnoreArguments();
+
+            PasswordHash.HashInfo hashedTokenResult;
+            string encryptedUserIdResult;
+            byte[] userIdSaltResult;
+            DateTime issuedAtResult;
+            DateTime refreshedResult;
+
+            var result = tokenStorage.RetrieveToken(encryptedUserId, out hashedTokenResult, out encryptedUserIdResult, out userIdSaltResult, out issuedAtResult, out refreshedResult);
+            
+            Assert.IsFalse(result);            
         }
     }
 }

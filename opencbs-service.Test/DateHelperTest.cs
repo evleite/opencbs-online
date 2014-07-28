@@ -15,9 +15,13 @@ namespace OpenCBS.Online.Service.Test
         /// Test for <see cref="DateHelperTest" />.
         /// </summary>
         [Test]
-        public void Test()
+        public void NowTest()
         {
-            Assert.Inconclusive();
+            var dateHelper = new DateHelper();
+            var orgNow = DateTime.Now;
+            var newNow = dateHelper.Now;
+            Assert.IsTrue(orgNow <= newNow);
+
         }
     }
 }
