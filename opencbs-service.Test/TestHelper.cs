@@ -26,7 +26,8 @@ namespace OpenCBS.Online.Service.Test
 
             return browser.Post(RouterPattern.Security.Authenticate, with =>
             {
-                with.Body(JsonConvert.SerializeObject(body), "application/json");
+                string bodyStr = JsonConvert.SerializeObject(body);
+                with.Body(bodyStr, "application/json");
                 with.HttpRequest();
             });
         }

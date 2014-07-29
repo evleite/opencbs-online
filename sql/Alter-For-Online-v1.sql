@@ -14,6 +14,7 @@ CREATE TABLE [dbo].[TokenStorage](
 	[token_iterations] [int] NOT NULL,
 	[issued_at] [datetime] NOT NULL,
 	[refreshed] [datetime] NOT NULL,
+	[user_id] int NOT NULL
  CONSTRAINT [PK_TokenStorage] PRIMARY KEY CLUSTERED 
 (
 	[id] ASC

@@ -28,11 +28,15 @@ namespace OpenCBS.Online.Service.Test.Data.Security
         [Test]
         public void StoreAndRetrieveTokenTest()
         {
+            TestHelper.DeleteTestData();
+            TestHelper.InsertTestData();
+
             var dataConnection = new DataConnection();
             var dateHelper = new DateHelper();
 
             var tokenStorage = new TokenStorage(dataConnection, dateHelper);
 
+            var userId = 1;
             var userIdSalt = new byte[24];
             var tokenSalt = new byte[24];
             var encryptedGuid = "encrypted-guid";
@@ -48,7 +52,7 @@ namespace OpenCBS.Online.Service.Test.Data.Security
                 Salt = Convert.ToBase64String(tokenSalt)
             };
 
-            Assert.IsTrue(tokenStorage.StoreToken(hashedToken, encryptedUserId, userIdSalt, issuedAt));
+            Assert.IsTrue(tokenStorage.StoreToken(userId, hashedToken, encryptedUserId, userIdSalt, issuedAt));
             
             PasswordHash.HashInfo hashedTokenResult;
             string encryptedUserIdResult;
@@ -64,8 +68,7 @@ namespace OpenCBS.Online.Service.Test.Data.Security
             Assert.AreEqual(encryptedUserId, encryptedUserIdResult);
             Assert.AreEqual(userIdSalt, userIdSaltResult);
             Assert.AreEqual(new DateTime(2014, 11, 21, 14, 54, 33), issuedAtResult);
-            Assert.AreEqual(new DateTime(2014, 11, 21, 14, 54, 33), refreshedResult);
-            
+            Assert.AreEqual(new DateTime(2014, 11, 21, 14, 54, 33), refreshedResult);            
            
         }
 
@@ -77,29 +80,12 @@ namespace OpenCBS.Online.Service.Test.Data.Security
 
             var tokenStorage = new TokenStorage(dataConnection, dateHelper);
 
+            var userId = 1;
             var userIdSalt = new byte[24];
             var tokenSalt = new byte[24];
             var encryptedGuid = "encrypted-guid";
             var encryptedUserId = "dummy-encrypted-user-id";
             var issuedAt = new DateTime(2014, 11, 21, 14, 54, 33);
-            var stubSql = @" INSERT INTO [TokenStorage]
-                                ([id]
-                                ,[id_salt]
-                                ,[token_hash]
-                                ,[token_salt]
-                                ,[token_method]
-                                ,[token_iterations]
-                                ,[issued_at]
-                                ,[refreshed])
-                            VALUES
-                                (@id
-                                ,@id_salt
-                                ,@token_hash
-                                ,@token_salt
-                                ,@token_method
-                                ,@token_iterations
-                                ,@issued_at
-                                ,@refreshed)";
 
             var hashedToken = new PasswordHash.HashInfo
             {
@@ -112,12 +98,7 @@ namespace OpenCBS.Online.Service.Test.Data.Security
             // stub fake calls
             dataConnection.Stub(x => x.Execute(null, null)).Throw(new Exception()).IgnoreArguments();
 
-            Assert.Throws<Exception>(() => tokenStorage.StoreToken(hashedToken, encryptedUserId, userIdSalt, issuedAt));
-            
-            //Assert.Throws<Exception>(() => tokenStorage.RetrieveToken(encryptedUserId, out hashedTokenResult, out encryptedUserIdResult, out userIdSaltResult, out issuedAtResult, out refreshedResult));
-            
-            
-                        
+            Assert.Throws<Exception>(() => tokenStorage.StoreToken(userId, hashedToken, encryptedUserId, userIdSalt, issuedAt));
         }
 
         [Test]
@@ -144,6 +125,101 @@ namespace OpenCBS.Online.Service.Test.Data.Security
             var result = tokenStorage.RetrieveToken(encryptedUserId, out hashedTokenResult, out encryptedUserIdResult, out userIdSaltResult, out issuedAtResult, out refreshedResult);
             
             Assert.IsFalse(result);            
+        }
+
+        [Test]
+        public void VerifyTokenExistenceTest()
+        {
+            TestHelper.DeleteTestData();
+            TestHelper.InsertTestData();
+
+            //VerifyTokenExistence
+            var dataConnection = new DataConnection();
+            var dateHelper = new DateHelper();
+
+            var tokenStorage = new TokenStorage(dataConnection, dateHelper);
+
+            var userId = 101;
+            var userIdSalt = new byte[24];
+            var tokenSalt = new byte[24];
+            var encryptedGuid = "encrypted-guid";
+            var encryptedUserId = "dummy-encrypted-user-id";
+            var issuedAt = new DateTime(2014, 11, 21, 14, 54, 33);
+            
+            var hashedToken = new PasswordHash.HashInfo
+            {
+                Hash = encryptedGuid,
+                Iterations = 1000,
+                Method = "sha1",
+                Salt = Convert.ToBase64String(tokenSalt)
+            };
+
+            Assert.IsTrue(tokenStorage.StoreToken(userId, hashedToken, encryptedUserId, userIdSalt, issuedAt));
+
+            string hashedTokenResult;
+            DateTime issuedAtResult;
+            DateTime refreshedResult;
+            var verifyTokenSuccess = tokenStorage.VerifyTokenExistence(userId, out hashedTokenResult, out issuedAtResult, out refreshedResult);
+
+            Assert.IsTrue(verifyTokenSuccess);
+            Assert.AreEqual(encryptedGuid, hashedTokenResult);
+            Assert.AreEqual(new DateTime(2014, 11, 21, 14, 54, 33), issuedAtResult);
+            Assert.AreEqual(new DateTime(2014, 11, 21, 14, 54, 33), refreshedResult);
+
+            verifyTokenSuccess = tokenStorage.VerifyTokenExistence(102, out hashedTokenResult, out issuedAtResult, out refreshedResult);
+
+            Assert.IsFalse(verifyTokenSuccess);
+            Assert.AreEqual(null, hashedTokenResult);
+            Assert.AreEqual(new DateTime(), issuedAtResult);
+            Assert.AreEqual(new DateTime(), refreshedResult);
+        }
+
+        [Test]
+        public void RefreshTokenTest()
+        {
+            var dataConnection = new DataConnection();
+            var dateHelper = new DateHelper();
+
+            var tokenStorage = new TokenStorage(dataConnection, dateHelper);
+
+            var userId = 101;
+            var userIdSalt = new byte[24];
+            var tokenSalt = new byte[24];
+            var encryptedGuid = "encrypted-guid";
+            var encryptedUserId = "dummy-encrypted-user-id";
+            var issuedAt = new DateTime(2014, 11, 21, 14, 54, 33);
+            
+            var hashedToken = new PasswordHash.HashInfo
+            {
+                Hash = encryptedGuid,
+                Iterations = 1000,
+                Method = "sha1",
+                Salt = Convert.ToBase64String(tokenSalt)
+            };
+
+            Assert.IsTrue(tokenStorage.StoreToken(userId, hashedToken, encryptedUserId, userIdSalt, issuedAt));
+
+            Assert.IsTrue(tokenStorage.RefreshToken(userId, hashedToken.Hash, new DateTime(2014, 11, 21, 15, 55, 22)));
+
+            PasswordHash.HashInfo hashedTokenResult;
+            string encryptedUserIdResult;
+            byte[] userIdSaltResult;
+            DateTime issuedAtResult;
+            DateTime refreshedResult;
+            var retrieveTokenSuccess = tokenStorage.RetrieveToken(encryptedUserId, out hashedTokenResult, out encryptedUserIdResult, out userIdSaltResult, out issuedAtResult, out refreshedResult);
+
+            Assert.IsTrue(retrieveTokenSuccess);
+            Assert.AreEqual(hashedToken.Salt, hashedTokenResult.Salt);
+            Assert.AreEqual(hashedToken.Hash, hashedTokenResult.Hash);
+            Assert.AreEqual(hashedToken.Method, hashedTokenResult.Method);
+            Assert.AreEqual(encryptedUserId, encryptedUserIdResult);
+            Assert.AreEqual(userIdSalt, userIdSaltResult);
+            Assert.AreEqual(new DateTime(2014, 11, 21, 14, 54, 33), issuedAtResult);
+            Assert.AreEqual(new DateTime(2014, 11, 21, 15, 55, 22), refreshedResult);
+
+            // check if using a wrong id/encryptid fails (it should fail)
+            Assert.IsFalse(tokenStorage.RefreshToken(102, hashedToken.Hash, new DateTime(2014, 11, 21, 15, 55, 22)));
+            Assert.IsFalse(tokenStorage.RefreshToken(userId, hashedToken.Hash + 'a', new DateTime(2014, 11, 21, 15, 55, 22)));
         }
     }
 }

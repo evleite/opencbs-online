@@ -23,6 +23,11 @@ namespace OpenCBS.Online.Service.Modules.Security
         {
             logger.Debug("Instantiate SecurityModule.");
 
+            Post[RouterPattern.Security.VerifyToken] = (parameters =>
+            {                
+                return parameters;
+            });
+
             Post[RouterPattern.Security.Authenticate] = parameters =>
             {                
                 try

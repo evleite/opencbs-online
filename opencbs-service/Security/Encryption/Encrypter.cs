@@ -12,14 +12,14 @@ namespace OpenCBS.Online.Service.Security.Encryption
             return BlockEncrypter.BlockEncrypter.GetSalt();
         }
 
-        public string Encrypt(string toEncypt, byte[] password)
+        public string Encrypt(string toEncrypt, byte[] password)
         {
-            return BlockEncrypter.BlockEncrypter.EncryptStringBlock(toEncypt, password);
+            return BlockEncrypter.BlockEncrypter.EncryptStringBlock(toEncrypt, password);
         }
 
-        public string Decrypt(string toEncypt, byte[] password)
+        public string Decrypt(string toDecrypt, byte[] password)
         {
-            return BlockEncrypter.BlockEncrypter.DecryptStringBlock(toEncypt, password);
+            return BlockEncrypter.BlockEncrypter.DecryptStringBlock(toDecrypt, password);
         }
     }
 }

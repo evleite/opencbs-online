@@ -10,6 +10,7 @@ namespace OpenCBS.Online.Service
         public static class Security
         {
             public static readonly string Authenticate = "/security/authenticate";
+            public static readonly string VerifyToken = "/security/verifytoken";
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using OpenCBS.ArchitectureV2.Interface.Service;
+using OpenCBS.Online.Service.Data.Security;
 using OpenCBS.Online.Service.Models;
 using OpenCBS.Online.Service.Models.Security;
 using StructureMap;
@@ -23,7 +24,7 @@ namespace OpenCBS.Online.Service.Security
         }
 
         public IAuthenticationResult Authenticate(string username, string password)
-        {
+        {            
             // check the user via core
             var user = authService.Login(username, password);
             if (user == null)

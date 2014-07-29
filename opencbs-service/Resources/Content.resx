@@ -120,6 +120,9 @@
   <data name="AuthenticationResult_ErrorRequest" xml:space="preserve">
     <value>The authentication request could not be processed.</value>
   </data>
+  <data name="AuthenticationResult_ExistingToken" xml:space="preserve">
+    <value>Already authenticated,existing token</value>
+  </data>
   <data name="AuthenticationResult_Failed" xml:space="preserve">
     <value>Authentication failed.</value>
   </data>

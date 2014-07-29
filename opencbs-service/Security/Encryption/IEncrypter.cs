@@ -10,7 +10,7 @@ namespace OpenCBS.Online.Service.Security.Encryption
     {
 
         byte[] GetSalt();
-        string Encrypt(string toEncypt, byte[] password);
-        string Decrypt(string toEncypt, byte[] password);
+        string Encrypt(string toEncrypt, byte[] password);
+        string Decrypt(string toDecrypt, byte[] password);
     }
 }

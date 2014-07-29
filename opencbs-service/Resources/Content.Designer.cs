@@ -70,6 +70,15 @@ namespace OpenCBS.Online.Service.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Already authenticated,existing token.
+        /// </summary>
+        public static string AuthenticationResult_ExistingToken {
+            get {
+                return ResourceManager.GetString("AuthenticationResult_ExistingToken", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Authentication failed..
         /// </summary>
         public static string AuthenticationResult_Failed {

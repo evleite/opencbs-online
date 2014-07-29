@@ -96,6 +96,7 @@
     <Compile Include="Data\IDataConnection.cs" />
     <Compile Include="DateHelper.cs" />
     <Compile Include="Extensions\ContainerExtensions.cs" />
+    <Compile Include="Extensions\DateTimeExtensions.cs" />
     <Compile Include="IDateHelper.cs" />
     <Compile Include="IOpenGuid.cs" />
     <Compile Include="Json\JsonIocConvert.cs" />

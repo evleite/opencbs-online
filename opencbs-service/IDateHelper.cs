@@ -9,5 +9,7 @@ namespace OpenCBS.Online.Service
     public interface IDateHelper
     {
         DateTime Now { get; }
+
+        bool IsWithinTimeOutLimit(DateTime toCheck);
     }
 }

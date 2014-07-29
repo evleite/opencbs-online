@@ -37,17 +37,39 @@ namespace OpenCBS.Online.Service.Security
             // create the token
             var token = container.GetInstance<IAccessToken>();
             var passwordHash = container.GetInstance<IPasswordHash>();
+            string tokenHash;
+            string encryptedUserId;
+            byte[] userIdSalt;
+            DateTime issuedAt, refreshed;
+
+            // check whether there is a token existing for this userId
+            bool tokenExists = tokenStorage.VerifyTokenExistence(userId, out tokenHash, out issuedAt, out refreshed);
+            if (tokenExists)
+            {
+                if(dateHelper.IsWithinTimeOutLimit(refreshed)){
+                    // token is still valid, refresh the token to extend the timeout
+                    if (!tokenStorage.RefreshToken(userId, tokenHash, dateHelper.Now))
+                        throw new Exception("Failed to refresh existing the token");
+
+                    token.IssuedAt = issuedAt;
+                    token.Token = tokenHash;
+                    encryptedUserId = null;
+                    issuedAt = new DateTime();
+                    refreshed = new DateTime();
+                    return token;
+                }            
+            }
 
             // Create the token identifier
             Guid tokenId = openGuid.New();
             var hashedToken = passwordHash.CreateHash(tokenId.ToString());
 
-            var userIdSalt = encrypter.GetSalt();
-            var encryptedUserId = encrypter.Encrypt(userId.ToString(), userIdSalt);
-            var issuedAt = dateHelper.Now;
+            userIdSalt = encrypter.GetSalt();
+            encryptedUserId = encrypter.Encrypt(userId.ToString(), userIdSalt);
+            issuedAt = dateHelper.Now;
 
             //store the hashInfo
-            if (!tokenStorage.StoreToken(hashedToken, encryptedUserId, userIdSalt, issuedAt))
+            if (!tokenStorage.StoreToken(userId, hashedToken, encryptedUserId, userIdSalt, issuedAt))
                 throw new Exception("Failed to store the session token");
 
             // set the token for the user
