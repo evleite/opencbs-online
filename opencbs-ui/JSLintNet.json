@@ -1,0 +1,11 @@
+﻿{
+  "ignore": [
+    "\\js\\lib\\",
+    "\\js\\lib\\*.*"
+  ],
+  "options": {
+    "predef": {},
+    "browser": true,
+    "devel": true
+  }
+}

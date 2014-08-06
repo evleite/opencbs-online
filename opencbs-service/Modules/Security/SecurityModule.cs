@@ -28,6 +28,11 @@ namespace OpenCBS.Online.Service.Modules.Security
                 return parameters;
             });
 
+            Get[RouterPattern.Security.Authenticate] = (parameters =>
+            {
+                return "test";
+            });
+
             Post[RouterPattern.Security.Authenticate] = parameters =>
             {                
                 try
