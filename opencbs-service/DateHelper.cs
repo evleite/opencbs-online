@@ -17,7 +17,7 @@ namespace OpenCBS.Online.Service
 
         public bool IsWithinTimeOutLimit(DateTime toCheck)
         {
-            if (toCheck <= (Now.AddMinutes(Settings.TimeOutInMinutes)))
+            if (toCheck.AddMinutes(Settings.TimeOutInMinutes) > Now)
                 return true;
             
             return false;
