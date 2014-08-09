@@ -16,14 +16,16 @@
     "tests"
   ],
   "dependencies": {
-    "requirejs": "~2.1.14",
-    "requirejs-domready": "~2.0.1"
+    
   },
   "devDependencies": {
     "angularjs": "1.2.21",
     "angular-route": "1.2.21",
     "jquery": "2.1.1",
     "bootstrap": "3.2.0",
-    "ladda-bootstrap": "0.1.0"
+    "ladda-bootstrap": "0.1.0",
+    "angular-mocks": "~1.2.21",
+    "requirejs": "~2.1.14",
+    "requirejs-domready": "~2.0.1"
   }
 }
