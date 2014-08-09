@@ -1,0 +1,29 @@
+{
+  "name": "opencbs-web",
+  "version": "1.0.0",
+  "authors": [
+    "Oskar Himmelreich <oskar@himmelreich-it.com>"
+  ],
+  "description": "OpenCBS Online Web",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "vendor",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "requirejs": "~2.1.14",
+    "requirejs-domready": "~2.0.1"
+  },
+  "devDependencies": {
+    "angularjs": "1.2.21",
+    "angular-route": "1.2.21",
+    "jquery": "2.1.1",
+    "bootstrap": "3.2.0",
+    "ladda-bootstrap": "0.1.0"
+  }
+}

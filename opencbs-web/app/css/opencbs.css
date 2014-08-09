@@ -1,0 +1,14 @@
+﻿/*.ng-invalid {
+    border: 1px solid red;
+}
+.ng-valid {
+    border: 1px solid green;
+}
+    */
+.form-element {
+    margin: 6px 0px;
+}
+.logo-holder {
+    text-align:center;
+    margin-bottom:20px;
+}
