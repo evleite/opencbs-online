@@ -22,6 +22,12 @@
     },
     "requirejs/require.d.ts": {
       "commit": "c773444c7699a5f29963fed726e833daa3660bfc"
+    },
+    "jasmine/jasmine.d.ts": {
+      "commit": "f981db1a42196cccb0ee314b9f180037713bada9"
+    },
+    "angularjs/angular-mocks.d.ts": {
+      "commit": "a2dcd79027053539c95fe18a578f6fcfd70589d2"
     }
   }
 }

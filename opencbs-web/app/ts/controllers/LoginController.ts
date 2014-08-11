@@ -2,7 +2,10 @@
 ///<amd-dependency path="jquery.bootstrap"/>
 ///<amd-dependency path="spin"/>
 ///<amd-dependency path="ladda"/>
+
 import AuthService = require("ts/services/AuthService");
+
+console.debug("Load [LoginController]");
 
 interface ILoginControllerScope extends ng.IScope {
     authenticationResult: string;
@@ -14,9 +17,10 @@ interface ILoginControllerScope extends ng.IScope {
 export class LoginController {
 
     // inject dependencies
-    static $inject = ["$scope", "$location", "authService"];
+    //static $inject = ["$scope", "$location", "AuthService"];
         
     constructor(private $scope, private $location, private authService: AuthService) {
+        console.log("Instantiate [LoginController]");
         $scope.vm = this;
     }
 

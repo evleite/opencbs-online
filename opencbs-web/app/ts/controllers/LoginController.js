@@ -1,9 +1,18 @@
-﻿define(["require", "exports", "jquery", "jquery.bootstrap", "spin", "ladda"], function(require, exports) {
+﻿///<amd-dependency path="jquery"/>
+///<amd-dependency path="jquery.bootstrap"/>
+///<amd-dependency path="spin"/>
+///<amd-dependency path="ladda"/>
+define(["require", "exports", "jquery", "jquery.bootstrap", "spin", "ladda"], function(require, exports) {
+    console.debug("Load [LoginController]");
+
     var LoginController = (function () {
+        // inject dependencies
+        //static $inject = ["$scope", "$location", "AuthService"];
         function LoginController($scope, $location, authService) {
             this.$scope = $scope;
             this.$location = $location;
             this.authService = authService;
+            console.log("Instantiate [LoginController]");
             $scope.vm = this;
         }
         LoginController.prototype.login = function (username, password) {
@@ -42,7 +51,6 @@
                 l.stop();
             });
         };
-        LoginController.$inject = ["$scope", "$location", "authService"];
         return LoginController;
     })();
     exports.LoginController = LoginController;

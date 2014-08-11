@@ -1,11 +1,7 @@
-﻿/// <reference path="D:\code\himm-it\opencbs-online\opencbs-web\app/vendor/js/angular-mocks/angular-mocks.js" />
-/// <reference path="D:\code\himm-it\opencbs-online\opencbs-web\app/vendor/js/jquery/dist/jquery.js" />
-var tests = [];
-console.log('Start reading [test-main.js], reading files:');
+﻿var tests = [];
 for (var file in window.__karma__.files) {
     if (window.__karma__.files.hasOwnProperty(file)) {
         if (/Spec\.js$/.test(file)) {
-            console.log('Test found: ' + file);
             tests.push(file);
         }
     }

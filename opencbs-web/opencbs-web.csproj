@@ -21,6 +21,7 @@
     <Content Include="app\css\opencbs.css" />
     <Content Include="app\images\opencbs-logo.png" />
     <Content Include="app\index.html" />
+    <Content Include="app\vendor\js\angular-mocks\angular-mocks.js" />
     <Content Include="app\vendor\js\angular-route\angular-route.js" />
     <Content Include="app\vendor\js\angular-route\angular-route.min.js" />
     <Content Include="app\vendor\js\angularjs\angular.js" />
@@ -164,18 +165,28 @@
     <Content Include="app\views\login.html" />
     <Content Include="app\views\main.html" />
     <Content Include="Gruntfile.js" />
+    <Content Include="karma.conf.js" />
+    <Content Include="test\test-main.js" />
+    <Content Include="test\unit\RoutesJsSpec.js" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="app\ts\app.ts" />
     <TypeScriptCompile Include="app\main.ts" />
-    <TypeScriptCompile Include="app\ts\app2.ts" />
+    <TypeScriptCompile Include="app\ts\controllers\LoginController.d.ts" />
     <TypeScriptCompile Include="app\ts\controllers\LoginController.ts" />
     <TypeScriptCompile Include="app\ts\models.ts" />
+    <TypeScriptCompile Include="app\ts\services\AuthService.d.ts" />
     <TypeScriptCompile Include="app\ts\services\AuthService.ts" />
+    <TypeScriptCompile Include="app\ts\services\UrlService.d.ts" />
     <TypeScriptCompile Include="app\ts\services\UrlService.ts" />
+    <TypeScriptCompile Include="test\unit\controllers\LoginControllerSpec.ts" />
+    <TypeScriptCompile Include="test\unit\RoutesSpec.ts" />
+    <TypeScriptCompile Include="test\unit\trialSpec.ts" />
+    <TypeScriptCompile Include="typings\angularjs\angular-mocks.d.ts" />
     <TypeScriptCompile Include="typings\angularjs\angular-route.d.ts" />
     <TypeScriptCompile Include="typings\angularjs\angular.d.ts" />
+    <TypeScriptCompile Include="typings\jasmine\jasmine.d.ts" />
     <TypeScriptCompile Include="typings\jquery\jquery.d.ts" />
     <TypeScriptCompile Include="typings\ladda\ladda.d.ts" />
     <TypeScriptCompile Include="typings\requirejs\require.d.ts" />
@@ -200,9 +211,7 @@
       <DependentUpon>web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="test\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
@@ -235,6 +244,7 @@
     <TypeScriptRemoveComments>false</TypeScriptRemoveComments>
     <TypeScriptSourceMap>true</TypeScriptSourceMap>
     <TypeScriptModuleKind>AMD</TypeScriptModuleKind>
+    <TypeScriptGeneratesDeclarations>True</TypeScriptGeneratesDeclarations>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
     <TypeScriptTarget>ES5</TypeScriptTarget>

@@ -36,6 +36,7 @@
 // startup the application
 define(["angular", "domReady!", "jquery", "jquery.bootstrap", "ts/app"], function (angular, document) {
     // bootstrap the document, since we are loading asynchronously
+    console.debug("Bootstrap [openCbs]");
     angular.bootstrap(document, ["openCbs"]);
 });
 //# sourceMappingURL=main.js.map

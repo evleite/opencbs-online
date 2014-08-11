@@ -5,10 +5,8 @@
 ///<amd-dependency path="angular-route"/>
 define(["require", "exports", "ts/controllers/LoginController", "ts/services/AuthService", "ts/services/UrlService", "angular", "angular-route"], function(require, exports, loginController, AuthService, UrlService) {
     var OpenCbs = (function () {
-        function OpenCbs(name, modules) {
-            this.angular = require("angular");
-            this.app = angular.module(name, modules);
-            // this.app = angular.module("openCbs", ["ngRoute"]);
+        function OpenCbs(app) {
+            this.app = app;
         }
         OpenCbs.prototype.addController = function (name, controllerFn) {
             this.app.controller(name, controllerFn);
@@ -50,23 +48,25 @@ define(["require", "exports", "ts/controllers/LoginController", "ts/services/Aut
     })();
     exports.OpenCbs = OpenCbs;
 
-    (function (OpenCbsBootstrap) {
-        // load the main app
-        var openCbs = new OpenCbs("openCbs", ["ngRoute"]);
+    console.debug("Start AngularJS bootstrap");
 
-        // load the controllers
-        openCbs.addControllerInline("loginController", ["$scope", "$location", "authService", loginController.LoginController]);
+    // declare the main AngularJS module as global var
+    var openCbsApp = angular.module("openCbs", ["ngRoute"]);
+    var openCbs = new OpenCbs(openCbsApp);
 
-        // load the services
-        openCbs.addService("authService", AuthService);
-        openCbs.addService("urlService", UrlService);
+    // load the controllers
+    openCbs.addControllerInline("loginController", ["$scope", "$location", "authService", loginController.LoginController]);
 
-        // configure the application
-        openCbs.configure();
+    // load the services
+    openCbs.addService("authService", AuthService);
+    openCbs.addService("urlService", UrlService);
 
-        // execute initial run code
-        openCbs.startUp();
-    })(exports.OpenCbsBootstrap || (exports.OpenCbsBootstrap = {}));
-    var OpenCbsBootstrap = exports.OpenCbsBootstrap;
+    // configure the application
+    openCbs.configure();
+
+    // execute initial run code
+    openCbs.startUp();
+
+    console.debug("Finish AngularJS bootstrap");
 });
 //# sourceMappingURL=app.js.map

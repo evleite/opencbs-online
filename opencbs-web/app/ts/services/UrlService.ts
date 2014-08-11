@@ -1,4 +1,7 @@
-﻿class UrlService {
+﻿
+console.debug("Load [UrlService]");
+
+class UrlService {
 
     BASE_URL: string = "http://localhost:12007/api";
 

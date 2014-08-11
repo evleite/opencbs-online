@@ -1,12 +1,16 @@
 ﻿import UrlService = require("ts/services/UrlService");
 
+console.debug("Load [AuthService]");
+
 class AuthService {
 
     accessToken: string = null;
     issuedAt: Date = null;
 
-    constructor(private $http, private $q, private urlService: UrlService) {
+    //static $inject = ["$http", "$q", "UrlService"];
 
+    constructor(private $http, private $q, private urlService: UrlService) {
+        
     }
 
     isAuthenticated () : boolean{

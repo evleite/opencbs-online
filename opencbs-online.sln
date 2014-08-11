@@ -43,6 +43,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "opencbs-service.Integration
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "opencbs-web", "opencbs-web\opencbs-web.csproj", "{D759C980-81E3-409C-ABFC-4E85111BD020}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "karma-test", "karma-test\karma-test.csproj", "{B06F5116-914D-43F8-A3E4-847EA7C83574}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D407C47E-0BDB-40FB-BA18-F1011F2E1FF8}"
+	ProjectSection(SolutionItems) = preProject
+		WebEssentials-Settings.json = WebEssentials-Settings.json
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -232,6 +239,16 @@ Global
 		{D759C980-81E3-409C-ABFC-4E85111BD020}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D759C980-81E3-409C-ABFC-4E85111BD020}.Test|Any CPU.ActiveCfg = Debug|Any CPU
 		{D759C980-81E3-409C-ABFC-4E85111BD020}.Test|Any CPU.Build.0 = Debug|Any CPU
+		{B06F5116-914D-43F8-A3E4-847EA7C83574}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B06F5116-914D-43F8-A3E4-847EA7C83574}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B06F5116-914D-43F8-A3E4-847EA7C83574}.DebugWithTest|Any CPU.ActiveCfg = Debug|Any CPU
+		{B06F5116-914D-43F8-A3E4-847EA7C83574}.DebugWithTest|Any CPU.Build.0 = Debug|Any CPU
+		{B06F5116-914D-43F8-A3E4-847EA7C83574}.FitNesse|Any CPU.ActiveCfg = Debug|Any CPU
+		{B06F5116-914D-43F8-A3E4-847EA7C83574}.FitNesse|Any CPU.Build.0 = Debug|Any CPU
+		{B06F5116-914D-43F8-A3E4-847EA7C83574}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B06F5116-914D-43F8-A3E4-847EA7C83574}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B06F5116-914D-43F8-A3E4-847EA7C83574}.Test|Any CPU.ActiveCfg = Debug|Any CPU
+		{B06F5116-914D-43F8-A3E4-847EA7C83574}.Test|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -255,5 +272,6 @@ Global
 		{F1165087-FDFD-4A67-A133-F7D5926B7A56} = {5286D0B3-9CD4-4D86-A343-45275146337F}
 		{B66CB954-2B03-4EAC-9D70-B54589430ACD} = {5286D0B3-9CD4-4D86-A343-45275146337F}
 		{D759C980-81E3-409C-ABFC-4E85111BD020} = {5286D0B3-9CD4-4D86-A343-45275146337F}
+		{B06F5116-914D-43F8-A3E4-847EA7C83574} = {5286D0B3-9CD4-4D86-A343-45275146337F}
 	EndGlobalSection
 EndGlobal

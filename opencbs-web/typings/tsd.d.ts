@@ -4,3 +4,5 @@
 /// <reference path="ladda/ladda.d.ts" />
 /// <reference path="spin/spin.d.ts" />
 /// <reference path="requirejs/require.d.ts" />
+/// <reference path="jasmine/jasmine.d.ts" />
+/// <reference path="angularjs/angular-mocks.d.ts" />

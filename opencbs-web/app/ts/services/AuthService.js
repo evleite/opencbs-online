@@ -1,5 +1,8 @@
 ﻿define(["require", "exports"], function(require, exports) {
+    console.debug("Load [AuthService]");
+
     var AuthService = (function () {
+        //static $inject = ["$http", "$q", "UrlService"];
         function AuthService($http, $q, urlService) {
             this.$http = $http;
             this.$q = $q;

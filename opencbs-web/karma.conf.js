@@ -2,8 +2,6 @@
 // Generated on Sat Aug 09 2014 10:28:17 GMT+0200 (W. Europe Summer Time)
 /*global module:false */
 
-console.log('Start Karma configuration');
-
 module.exports = function (config) {
     config.set({
 
@@ -42,7 +40,8 @@ module.exports = function (config) {
         plugins: [
                 'karma-chrome-launcher',
                 'karma-jasmine',
-                'karma-requirejs'
+                'karma-requirejs',
+                'karma-sourcemap-loader'
         ],
 
         // web server port
@@ -51,9 +50,13 @@ module.exports = function (config) {
         // enable / disable colors in the output (reporters and logs)
         colors: true,
 
+        preprocessors: {
+            '**/*.js': ['sourcemap']
+        },
+
         // level of logging
         // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
-        logLevel: config.LOG_DEBUG,
+        //logLevel: config.LOG_DEBUG,
 
         reporters: ['progress']
     });

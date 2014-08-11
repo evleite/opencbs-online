@@ -37,8 +37,8 @@
 // startup the application
 define(["angular", "domReady!", "jquery", "jquery.bootstrap", "ts/app"],
     function (angular: ng.IAngularStatic, document) {
-
         // bootstrap the document, since we are loading asynchronously
+        console.debug("Bootstrap [openCbs]");
         angular.bootstrap(document, ["openCbs"]);
     }
-    );
+);

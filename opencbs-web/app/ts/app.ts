@@ -9,12 +9,11 @@ import AuthService = require("ts/services/AuthService");
 import UrlService = require("ts/services/UrlService");
 
 export class OpenCbs {
-    angular: ng.IAngularStatic = require("angular");
+
     app: ng.IModule;
 
-    constructor(name: string, modules: Array<string>) {
-        this.app = angular.module(name, modules);
-        // this.app = angular.module("openCbs", ["ngRoute"]);
+    constructor(app: ng.IModule) {
+        this.app = app;
     }
 
     addController(name: string, controllerFn: Function) {
@@ -65,21 +64,23 @@ export class OpenCbs {
     }
 }
 
-export module OpenCbsBootstrap {
+console.debug("Start AngularJS bootstrap");
 
-    // load the main app
-    var openCbs = new OpenCbs("openCbs", ["ngRoute"]);
+// declare the main AngularJS module as global var
+var openCbsApp = angular.module("openCbs", ["ngRoute"]);
+var openCbs = new OpenCbs(openCbsApp);
 
-    // load the controllers
-    openCbs.addControllerInline("loginController", ["$scope", "$location", "authService", loginController.LoginController]);
+// load the controllers
+openCbs.addControllerInline("loginController", ["$scope", "$location", "authService", loginController.LoginController]);
 
-    // load the services
-    openCbs.addService("authService", AuthService);
-    openCbs.addService("urlService", UrlService);
+// load the services
+openCbs.addService("authService", AuthService);
+openCbs.addService("urlService", UrlService);
 
-    // configure the application
-    openCbs.configure();
-    
-    // execute initial run code
-    openCbs.startUp();
-}
+// configure the application
+openCbs.configure();
+
+// execute initial run code
+openCbs.startUp();
+
+console.debug("Finish AngularJS bootstrap");
