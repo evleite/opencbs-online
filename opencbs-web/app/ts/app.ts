@@ -16,11 +16,11 @@ export class OpenCbs {
         this.app = app;
     }
 
-    addController(name: string, controllerFn: Function) {
+    addController(name: string, controllerFn: Function): void {
         this.app.controller(name, controllerFn);
     }
 
-    addControllerInline(name: string, inlineAnnotatedConstructor: any[]) {
+    addControllerInline(name: string, inlineAnnotatedConstructor: any[]): void {
         this.app.controller(name, inlineAnnotatedConstructor);
     }
 
@@ -29,17 +29,17 @@ export class OpenCbs {
     }
 
     startUp(): void {
-        this.app.run(function ($rootScope, $location, $window, authService) {
+        this.app.run(
+            function ($rootScope: ng.IRootScopeService,
+                $location: ng.ILocationService,
+                $window: ng.IWindowService,
+                authService: AuthService): void {
 
             $rootScope.$on("$routeChangeStart",
-                function (evt, next, current) {
+                function (evt: ng.IAngularEvent, next: ng.route.IRoute, current: ng.route.IRoute): void {
                     // If the user is NOT logged in
                     if (!authService.isAuthenticated()) {
-
-                        if (next.templateUrl === "views/login.html") {
-
-                        }
-                        else {
+                        if (next.templateUrl !== "views/login.html") {
                             $location.path("/login");
                         }
                     }
@@ -47,10 +47,8 @@ export class OpenCbs {
         });
     }
 
-
     configure(): void {
-        this.app.config(["$routeProvider", function ($routeProvider) {
-
+        this.app.config(["$routeProvider", function ($routeProvider: ng.route.IRouteProvider): void {
             $routeProvider
                 .when("/", {
                     templateUrl: "views/main.html"
@@ -59,16 +57,13 @@ export class OpenCbs {
                     templateUrl: "views/login.html"
                 })
                 .otherwise({ redirecTo: "/" });
-
         }]);
     }
 }
 
-console.debug("Start AngularJS bootstrap");
-
 // declare the main AngularJS module as global var
-var openCbsApp = angular.module("openCbs", ["ngRoute"]);
-var openCbs = new OpenCbs(openCbsApp);
+var openCbsApp: ng.IModule = angular.module("openCbs", ["ngRoute"]);
+var openCbs: OpenCbs = new OpenCbs(openCbsApp);
 
 // load the controllers
 openCbs.addControllerInline("loginController", ["$scope", "$location", "authService", loginController.LoginController]);
@@ -82,5 +77,3 @@ openCbs.configure();
 
 // execute initial run code
 openCbs.startUp();
-
-console.debug("Finish AngularJS bootstrap");

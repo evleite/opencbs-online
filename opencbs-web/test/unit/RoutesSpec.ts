@@ -1,8 +1,7 @@
-﻿/// <reference path="../../app/ts/services/authservice.d.ts" />
+﻿declare var define: RequireDefine;
 
-declare var define: RequireDefine;
-
-define(["angular", "angular-mocks", "angular-route"], (angular, angularMocks, angularRoute) => {
+define(["angular", "angular-mocks", "angular-route"],
+    (angular: ng.IAngularStatic, angularMocks: ng.IMockStatic, angularRoute: ng.route.IRouteService) => { 
     
     describe("Routes configuration Spec", () => {
         

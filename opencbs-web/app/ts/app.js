@@ -25,8 +25,7 @@ define(["require", "exports", "ts/controllers/LoginController", "ts/services/Aut
                 $rootScope.$on("$routeChangeStart", function (evt, next, current) {
                     // If the user is NOT logged in
                     if (!authService.isAuthenticated()) {
-                        if (next.templateUrl === "views/login.html") {
-                        } else {
+                        if (next.templateUrl !== "views/login.html") {
                             $location.path("/login");
                         }
                     }
@@ -48,8 +47,6 @@ define(["require", "exports", "ts/controllers/LoginController", "ts/services/Aut
     })();
     exports.OpenCbs = OpenCbs;
 
-    console.debug("Start AngularJS bootstrap");
-
     // declare the main AngularJS module as global var
     var openCbsApp = angular.module("openCbs", ["ngRoute"]);
     var openCbs = new OpenCbs(openCbsApp);
@@ -66,7 +63,5 @@ define(["require", "exports", "ts/controllers/LoginController", "ts/services/Aut
 
     // execute initial run code
     openCbs.startUp();
-
-    console.debug("Finish AngularJS bootstrap");
 });
 //# sourceMappingURL=app.js.map

@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<Tests>
+  <Test>
+    <Name>LoginController Test Spec login method (Chrome 36.0.1985 (Windows 8.1))</Name>
+    <DisplayName>LoginController Test Spec login method (Chrome 36.0.1985 (Windows 8.1))</DisplayName>
+    <Outcome>Passed</Outcome>
+  </Test>
+  <Test>
+    <Name>Test Unit Test - RequireJS Contains passing spec (Chrome 36.0.1985 (Windows 8.1))</Name>
+    <DisplayName>Test Unit Test - RequireJS Contains passing spec (Chrome 36.0.1985 (Windows 8.1))</DisplayName>
+    <Outcome>Passed</Outcome>
+  </Test>
+  <Test>
+    <Name>Routes configuration Spec,Index route:  The index URL WITHOUT authorization redirects to the login page (Chrome 36.0.1985 (Windows 8.1))</Name>
+    <DisplayName>Routes configuration Spec,Index route:  The index URL WITHOUT authorization redirects to the login page (Chrome 36.0.1985 (Windows 8.1))</DisplayName>
+    <Outcome>Passed</Outcome>
+  </Test>
+  <Test>
+    <Name>Routes configuration Spec,Index route:  The index URL WITH authorization redirects to the index page (Chrome 36.0.1985 (Windows 8.1))</Name>
+    <DisplayName>Routes configuration Spec,Index route:  The index URL WITH authorization redirects to the index page (Chrome 36.0.1985 (Windows 8.1))</DisplayName>
+    <Outcome>Passed</Outcome>
+  </Test>
+  <Test>
+    <Name>Routes configuration Spec,Login route:  A direct URL to login without authorization loads Login (Chrome 36.0.1985 (Windows 8.1))</Name>
+    <DisplayName>Routes configuration Spec,Login route:  A direct URL to login without authorization loads Login (Chrome 36.0.1985 (Windows 8.1))</DisplayName>
+    <Outcome>Passed</Outcome>
+  </Test>
+  <Test>
+    <Name>Routes configuration Spec,Login route:  A direct URL to login with authorization still loads Login (Chrome 36.0.1985 (Windows 8.1))</Name>
+    <DisplayName>Routes configuration Spec,Login route:  A direct URL to login with authorization still loads Login (Chrome 36.0.1985 (Windows 8.1))</DisplayName>
+    <Outcome>Passed</Outcome>
+  </Test>
+  <Test>
+    <Name>Routes configuration Spec,Login route:  A non-existing URL without authorization redirects to Login directly (Chrome 36.0.1985 (Windows 8.1))</Name>
+    <DisplayName>Routes configuration Spec,Login route:  A non-existing URL without authorization redirects to Login directly (Chrome 36.0.1985 (Windows 8.1))</DisplayName>
+    <Outcome>Passed</Outcome>
+  </Test>
+  <Test>
+    <Name>Routes configuration Spec Login Route (Chrome 36.0.1985 (Windows 8.1))</Name>
+    <DisplayName>Routes configuration Spec Login Route (Chrome 36.0.1985 (Windows 8.1))</DisplayName>
+    <Outcome>Passed</Outcome>
+  </Test>
+</Tests>

@@ -3,8 +3,6 @@
 ///<amd-dependency path="spin"/>
 ///<amd-dependency path="ladda"/>
 define(["require", "exports", "jquery", "jquery.bootstrap", "spin", "ladda"], function(require, exports) {
-    console.debug("Load [LoginController]");
-
     var LoginController = (function () {
         // inject dependencies
         //static $inject = ["$scope", "$location", "AuthService"];

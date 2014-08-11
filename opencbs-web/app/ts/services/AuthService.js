@@ -1,6 +1,4 @@
 ﻿define(["require", "exports"], function(require, exports) {
-    console.debug("Load [AuthService]");
-
     var AuthService = (function () {
         //static $inject = ["$http", "$q", "UrlService"];
         function AuthService($http, $q, urlService) {
@@ -17,15 +15,12 @@
         AuthService.prototype.authenticate = function (username, password) {
             var _this = this;
             var req = this.$q.defer();
-            var url = this.urlService.AUTHENTICATION_URL;
             var authPromise = this.$http.post(this.urlService.AUTHENTICATION_URL, { username: username, password: password });
 
             // when the request was successful
             authPromise.success(function (data, status, headers, config) {
-                //{"accessToken":null,"isValid":true,"message":"Authentication failed.","issuedAt":null}
-                //{"accessToken":"NDvgwbXTZNX0EchmZhrdMZemQSW21egm","isValid":true,"message":"Authentication successful.","issuedAt":"2014-07-29T13:05:30.9300000+02:00"}
                 // check whether the response was succesful
-                if (status != 200) {
+                if (status !== 200) {
                     req.reject("Authentication request failed.");
                 } else if (!data.isValid) {
                     req.reject("Authentication request is invalid.");

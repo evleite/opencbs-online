@@ -1,6 +1,4 @@
-﻿/// <reference path="../../app/ts/services/authservice.d.ts" />
-
-define(["angular", "angular-mocks", "angular-route"], function (angular, angularMocks, angularRoute) {
+﻿define(["angular", "angular-mocks", "angular-route"], function (angular, angularMocks, angularRoute) {
     describe("Routes configuration Spec", function () {
         var rootScope;
         var route;

@@ -5,13 +5,14 @@
 
 import AuthService = require("ts/services/AuthService");
 
-console.debug("Load [LoginController]");
-
-interface ILoginControllerScope extends ng.IScope {
+export interface ILoginFormController extends ng.IFormController {
+    submitted: boolean;
+}
+export interface ILoginControllerScope extends ng.IScope {
     authenticationResult: string;
     login(username: string, password: string): void;
-    loginForm: ng.IFormController;
-    vm: ILoginControllerScope;
+    loginForm: ILoginFormController;
+    vm: LoginController;
 }
 
 export class LoginController {
@@ -19,13 +20,13 @@ export class LoginController {
     // inject dependencies
     //static $inject = ["$scope", "$location", "AuthService"];
         
-    constructor(private $scope, private $location, private authService: AuthService) {
+    constructor(private $scope: ILoginControllerScope, private $location: ng.ILocationService, private authService: AuthService) {
         console.log("Instantiate [LoginController]");
         $scope.vm = this;
     }
 
     login(username: string, password: string): void {
-        var Ladda = require("ladda");
+        var Ladda: any = require("ladda");
 
         // reset the submitted flag
         this.$scope.loginForm.submitted = false;
@@ -33,7 +34,7 @@ export class LoginController {
         if (!this.$scope.loginForm.$valid) {
             this.$scope.loginForm.submitted = true;
             return;
-        } 
+        }
         
         // if the for is valid continue
         var btnLoginSubmit: Element  = document.getElementById("btnLoginSubmit");
@@ -41,22 +42,21 @@ export class LoginController {
         l.start();
         // authenticate using promise
         this.authService.authenticate(username, password)
-            .then((result) => {
+            .then((result: boolean): void => {
                 // successful authentication process, check the result
                 if (result) {
                     // login valid
                     this.$scope.authenticationResult = null;
                     this.$location.path("/").replace();
-                }
-                else {
+                } else {
                     // login failed
                     this.$scope.authenticationResult = "Login failed";
                 }
                 l.stop();
-            }, (err) => {
+            }, (err: string): void => {
                 // authentication process threw an error
                 this.$scope.authenticationResult = err;
                 l.stop();
             });
-    }   
+    }
 }

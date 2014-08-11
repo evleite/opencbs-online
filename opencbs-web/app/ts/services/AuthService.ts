@@ -1,7 +1,5 @@
 ﻿import UrlService = require("ts/services/UrlService");
 
-console.debug("Load [AuthService]");
-
 class AuthService {
 
     accessToken: string = null;
@@ -9,7 +7,7 @@ class AuthService {
 
     //static $inject = ["$http", "$q", "UrlService"];
 
-    constructor(private $http, private $q, private urlService: UrlService) {
+    constructor(private $http: ng.IHttpService, private $q: ng.IQService, private urlService: UrlService) {
         
     }
 
@@ -18,18 +16,15 @@ class AuthService {
     }
 
     authenticate(username: string, password: string): ng.IPromise<boolean> {
-        var req = this.$q.defer();
-        var url = this.urlService.AUTHENTICATION_URL;
-        var authPromise = this.$http.post(this.urlService.AUTHENTICATION_URL, { username: username, password: password });
+        var req: ng.IDeferred<{}> = this.$q.defer();
+        var authPromise: any = this.$http.post(this.urlService.AUTHENTICATION_URL, { username: username, password: password });
 
         // when the request was successful
         authPromise.success(
-            (data, status, headers, config) => {
-                //{"accessToken":null,"isValid":true,"message":"Authentication failed.","issuedAt":null}
-                //{"accessToken":"NDvgwbXTZNX0EchmZhrdMZemQSW21egm","isValid":true,"message":"Authentication successful.","issuedAt":"2014-07-29T13:05:30.9300000+02:00"}
-
+            (data: any, status: number, headers: any, config: any): void => {
+                
                 // check whether the response was succesful
-                if (status != 200) {
+                if (status !== 200) {
                     req.reject("Authentication request failed.");
                 } // check whether the data was valid
                 else if (!data.isValid) {
@@ -40,8 +35,7 @@ class AuthService {
                     this.issuedAt = null;
                     // set the resolve promise false
                     req.resolve(false);
-                }
-                else {
+                } else {
                     this.accessToken = data.accessToken;
                     this.issuedAt = data.issuedAt;
                     // set the resolve promise true
@@ -51,7 +45,7 @@ class AuthService {
 
         // when the request was unsuccessful
         authPromise.error(
-            (data, status, headers, config) => {
+            (data: any, status: number, headers: any, config: any): void => {
                 req.reject("Authentication request is invalid.");
             });
 

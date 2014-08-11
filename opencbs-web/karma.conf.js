@@ -41,7 +41,8 @@ module.exports = function (config) {
                 'karma-chrome-launcher',
                 'karma-jasmine',
                 'karma-requirejs',
-                'karma-sourcemap-loader'
+                'karma-sourcemap-loader',
+                'karma-xml-reporter'
         ],
 
         // web server port
@@ -58,6 +59,6 @@ module.exports = function (config) {
         // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
         //logLevel: config.LOG_DEBUG,
 
-        reporters: ['progress']
+        reporters: ['progress', 'xml']
     });
 };
