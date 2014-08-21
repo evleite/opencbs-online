@@ -15,9 +15,7 @@
     "test",
     "tests"
   ],
-  "dependencies": {
-    
-  },
+  "dependencies": {},
   "devDependencies": {
     "angularjs": "1.2.21",
     "angular-route": "1.2.21",
@@ -26,6 +24,8 @@
     "ladda-bootstrap": "0.1.0",
     "angular-mocks": "~1.2.21",
     "requirejs": "~2.1.14",
-    "requirejs-domready": "~2.0.1"
+    "requirejs-domready": "~2.0.1",
+    "jasmine": "~2.0.1",
+    "qunit": "~1.15.0"
   }
 }

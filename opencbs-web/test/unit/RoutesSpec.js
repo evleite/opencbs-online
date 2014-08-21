@@ -1,5 +1,5 @@
-﻿define(["angular", "angular-mocks", "angular-route"], function (angular, angularMocks, angularRoute) {
-    describe("Routes configuration Spec", function () {
+﻿define(["require", "exports", "../../app/ts/models/AuthenticationHolder", "angular", "angular-mocks", "angular-route"], function(require, exports, AuthenticationHolder) {
+    describe("Routes configuration:", function () {
         var rootScope;
         var route;
         var location;
@@ -7,12 +7,14 @@
 
         var authenticationService;
 
+        var angularMocks = angular.mock;
+
         // mock the app
         beforeEach(function () {
-            return angularMocks.module("openCbs");
+            return angular.mock.module("openCbs");
         });
 
-        beforeEach(inject(function ($injector) {
+        beforeEach(angular.mock.inject(function ($injector) {
             rootScope = $injector.get("$rootScope");
             route = $injector.get("$route");
             location = $injector.get("$location");
@@ -37,7 +39,7 @@
             it("The index URL WITH authorization redirects to the index page", function () {
                 httpBackend.expectGET("views/main.html").respond(200, "main HTML");
 
-                authenticationService.accessToken = "dummy-token";
+                authenticationService.authenticationHolder = new AuthenticationHolder("dummy-token", new Date(Date.now() - 900000), new Date(Date.now() - 900000), "Test User");
                 location.path("/");
                 rootScope.$digest();
                 httpBackend.flush();
@@ -63,7 +65,7 @@
             });
 
             it("A direct URL to login with authorization still loads Login", function () {
-                authenticationService.accessToken = "dummy-token";
+                authenticationService.authenticationHolder = new AuthenticationHolder("dummy-token", new Date(Date.now() - 900000), new Date(Date.now() - 900000), "Test User");
                 location.path("/login");
                 rootScope.$digest();
                 httpBackend.flush();
@@ -84,4 +86,5 @@
         });
     });
 });
+//});   */
 //# sourceMappingURL=RoutesSpec.js.map

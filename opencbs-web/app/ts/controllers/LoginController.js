@@ -10,7 +10,6 @@ define(["require", "exports", "jquery", "jquery.bootstrap", "spin", "ladda"], fu
             this.$scope = $scope;
             this.$location = $location;
             this.authService = authService;
-            console.log("Instantiate [LoginController]");
             $scope.vm = this;
         }
         LoginController.prototype.login = function (username, password) {

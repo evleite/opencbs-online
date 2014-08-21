@@ -1,15 +1,16 @@
-﻿define(["require", "exports"], function(require, exports) {
+﻿define(["require", "exports", "ts/models/AuthenticationHolder"], function(require, exports, AuthenticationHolder) {
     var AuthService = (function () {
-        //static $inject = ["$http", "$q", "UrlService"];
         function AuthService($http, $q, urlService) {
             this.$http = $http;
             this.$q = $q;
             this.urlService = urlService;
-            this.accessToken = null;
-            this.issuedAt = null;
         }
         AuthService.prototype.isAuthenticated = function () {
-            return this.accessToken != null;
+            if (this.authenticationHolder == null) {
+                return false;
+            }
+
+            return this.authenticationHolder.isAuthenticated();
         };
 
         AuthService.prototype.authenticate = function (username, password) {
@@ -25,14 +26,12 @@
                 } else if (!data.isValid) {
                     req.reject("Authentication request is invalid.");
                 } else if (!data.accessToken) {
-                    _this.accessToken = null;
-                    _this.issuedAt = null;
+                    _this.authenticationHolder = null;
 
                     // set the resolve promise false
                     req.resolve(false);
                 } else {
-                    _this.accessToken = data.accessToken;
-                    _this.issuedAt = data.issuedAt;
+                    _this.authenticationHolder = new AuthenticationHolder(data.accessToken, data.issuedAt, data.timesOut, data.userFullname);
 
                     // set the resolve promise true
                     req.resolve(true);

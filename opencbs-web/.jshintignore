@@ -1,0 +1,5 @@
+*.js
+typyings
+bower_components
+node_modules
+app/vendor/**

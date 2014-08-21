@@ -1,4 +1,3 @@
-/// <reference path="" />
 module.exports = function (grunt) {
 
     grunt.initConfig({
@@ -17,44 +16,79 @@ module.exports = function (grunt) {
                     "bower_components/ladda-bootstrap/dist/ladda-themeless.min.css"],
                 dest: "app/vendor/lib.css"
             }
-        },    
+        },
 
         copy: {
             requireJs: {
                 expand: true,
-                src: ["bower_components/requirejs/require.js"],
+                src: ["bower_components/requirejs/require.js", "bower_components/requirejs-domready/domReady.js"],
                 flatten: true,
-                dest: "app/vendor"
-                
+                dest: "app/vendor/js"
+
             },
+            qUnit: {
+                files: [
+                {
+                    expand: true,
+                    src: ["bower_components/qunit/qunit/qunit.css"],
+                    flatten: true,
+                    dest: "app/vendor/css"
+                },
+                {
+                    expand: true,
+                    src: ["bower_components/qunit/qunit/qunit.js"],
+                    flatten: true,
+                    dest: "app/vendor/js"
+                }
+                ]},
             jsVendor: {
                 files: [{
                     expand: true,
                     cwd: "bower_components",
-                    //flatten: true,
-                    src: ["**/*.js", "**/*.map"],
+                    flatten: true,
+                    src: ["**/*.min.js", "**/*.min.js.map"],
                     dest: "app/vendor/js"
                 },
                 {
                     expand: true,
-                    cwd: "vendor_manual",
-                    //flatten: true,
-                    src: "**/*.js",
+                    cwd: "bower_components",
+                    flatten: true,
+                    src: ["jasmine/lib/jasmine-core/jasmine-html.js",
+                        "jasmine/lib/jasmine-core/jasmine.js",
+                        "angular-mocks/angular-mocks.js"],
                     dest: "app/vendor/js"
+                },
+                {
+                    expand: true,
+                    cwd: "vendor_manual/sb-admin-2",
+                    flatten: true,
+                    src: "**/*.js",
+                    dest: "app/vendor/js/sb-admin-2"
                 }
                 ]
+            },
+            cssJasmine: {
+                files: [{
+                    expand: true,
+                    cwd: "bower_components",
+                    src: "jasmine/lib/jasmine-core/jasmine.css",
+                    flatten: true,
+                    dest: "app/vendor/css"
+                }]
             },
             cssVendor: {
                 files: [{
                     expand: true,
                     cwd: "bower_components",
                     src: "**/*.css",
+                    flatten: true,
                     dest: "app/vendor/css"
                 },
                 {
                     expand: true,
                     cwd: "vendor_manual",
                     src: "**/*.css",
+                    flatten: true,
                     dest: "app/vendor/css"
                 }]
             }
@@ -69,7 +103,9 @@ module.exports = function (grunt) {
         "clean:vendor",
         "concat:cssVendor",
         "copy:jsVendor",
-        "copy:requireJs"
+        "copy:requireJs",
+        "copy:cssJasmine",
+        "copy:qUnit"
     ]);
 
     grunt.registerTask("default", ["build:debug"]);

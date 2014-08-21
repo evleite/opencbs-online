@@ -84,7 +84,7 @@
     "GenerateSourceMaps": true,
     "GzipMinifiedFiles": false,
     "LintOnBuild": false,
-    "LintOnSave": true,
+    "LintOnSave": false,
     "LintResultLocation": "Message",
     "MakeMinified": true,
     "OutputDirectory": null,

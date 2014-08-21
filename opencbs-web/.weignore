@@ -1,0 +1,4 @@
+*.d.ts
+typyings
+bower_components
+node_modules

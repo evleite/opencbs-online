@@ -1,18 +1,18 @@
 ﻿import UrlService = require("ts/services/UrlService");
+import AuthenticationHolder = require("ts/models/AuthenticationHolder");
 
 class AuthService {
+    authenticationHolder: AuthenticationHolder;
 
-    accessToken: string = null;
-    issuedAt: Date = null;
 
-    //static $inject = ["$http", "$q", "UrlService"];
+    constructor(private $http: ng.IHttpService, private $q: ng.IQService, private urlService: UrlService) {}
 
-    constructor(private $http: ng.IHttpService, private $q: ng.IQService, private urlService: UrlService) {
-        
-    }
+    isAuthenticated(): boolean {
+        if (this.authenticationHolder == null) {
+            return false;
+        }
 
-    isAuthenticated () : boolean{
-        return this.accessToken != null;
+        return this.authenticationHolder.isAuthenticated();
     }
 
     authenticate(username: string, password: string): ng.IPromise<boolean> {
@@ -22,7 +22,7 @@ class AuthService {
         // when the request was successful
         authPromise.success(
             (data: any, status: number, headers: any, config: any): void => {
-                
+
                 // check whether the response was succesful
                 if (status !== 200) {
                     req.reject("Authentication request failed.");
@@ -31,13 +31,14 @@ class AuthService {
                     req.reject("Authentication request is invalid.");
                 } // request seems to have gone correct, check the result
                 else if (!data.accessToken) {
-                    this.accessToken = null;
-                    this.issuedAt = null;
+                    this.authenticationHolder = null;
+
                     // set the resolve promise false
                     req.resolve(false);
                 } else {
-                    this.accessToken = data.accessToken;
-                    this.issuedAt = data.issuedAt;
+                    this.authenticationHolder = new AuthenticationHolder(
+                        data.accessToken, data.issuedAt, data.timesOut, data.userFullname);
+
                     // set the resolve promise true
                     req.resolve(true);
                 }

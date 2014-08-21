@@ -1,7 +1,7 @@
 ﻿define(["require", "exports"], function(require, exports) {
     var UrlService = (function () {
         function UrlService() {
-            this.BASE_URL = "http://localhost:12007/api";
+            this.BASE_URL = "/api";
             this.AUTHENTICATION_URL = this.BASE_URL + "/security/authenticate";
         }
         return UrlService;

@@ -1,13 +1,13 @@
 ﻿require.config({
     enforceDefine: true,
     paths: {
-        "jquery.bootstrap": "vendor/js/bootstrap/dist/js/bootstrap.min",
-        "jquery": "vendor/js/jquery/dist/jquery",
-        "domReady": "vendor/js/requirejs-domready/domReady",
-        "angular": "vendor/js/angular/angular",
-        "angular-route": "vendor/js/angular-route/angular-route.min",
-        "ladda": "vendor/js/ladda-bootstrap/dist/ladda.min",
-        "spin": "vendor/js/ladda-bootstrap/dist/spin.min"
+        "jquery.bootstrap": "vendor/js/bootstrap.min",
+        "jquery": "vendor/js/jquery.min",
+        "domReady": "vendor/js/domReady",
+        "angular": "vendor/js/angular.min",
+        "angular-route": "vendor/js/angular-route.min",
+        "ladda": "vendor/js/ladda.min",
+        "spin": "vendor/js/spin.min"
     },
 
     shim: {
@@ -35,7 +35,7 @@
 });
 
 // startup the application
-define(["angular", "domReady!", "jquery", "jquery.bootstrap", "ts/app"],
+define(["angular", "domReady!", "ts/app"], // "jquery", "jquery.bootstrap", 
     function (angular: ng.IAngularStatic, document: HTMLDocument): void {
         // bootstrap the document, since we are loading asynchronously
         angular.bootstrap(document, ["openCbs"]);

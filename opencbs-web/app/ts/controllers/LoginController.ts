@@ -19,9 +19,8 @@ export class LoginController {
 
     // inject dependencies
     //static $inject = ["$scope", "$location", "AuthService"];
-        
+    
     constructor(private $scope: ILoginControllerScope, private $location: ng.ILocationService, private authService: AuthService) {
-        console.log("Instantiate [LoginController]");
         $scope.vm = this;
     }
 
